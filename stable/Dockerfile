@@ -20,7 +20,7 @@ ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /tmp
 ENV COMPOSER_VERSION 1.7.2
 
-RUN curl --silent --fail --location --retry 3 --output /tmp/installer.php --url https://raw.githubusercontent.com/composer/getcomposer.org/b107d959a5924af895807021fcef4ffec5a76aa9/web/installer \
+RUN curl --silent --fail --location --retry 3 --output /tmp/installer.php --url https://getcomposer.org/installer \
  && php -r " \
     \$signature = "$(wget -q -O - https://composer.github.io/installer.sig)"; \
     \$hash = hash('SHA384', file_get_contents('/tmp/installer.php')); \
