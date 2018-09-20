@@ -1,6 +1,6 @@
-FROM php:7-alpine3.7
+FROM php:7.3-rc-fpm-alpine
 
-RUN apk --no-cache add git subversion openssh mercurial tini bash patch
+RUN apk --no-cache add git subversion openssh mercurial tini bash patch libzip-dev
 
 RUN echo "memory_limit=-1" > "$PHP_INI_DIR/conf.d/memory-limit.ini" \
  && echo "date.timezone=${PHP_TIMEZONE:-UTC}" > "$PHP_INI_DIR/conf.d/date_timezone.ini"
@@ -22,7 +22,7 @@ ENV COMPOSER_VERSION 1.7.2
 
 RUN curl --silent --fail --location --retry 3 --output /tmp/installer.php --url https://getcomposer.org/installer \
  && php -r " \
-    \$signature = "$(wget -q -O - https://composer.github.io/installer.sig)"; \
+    \$signature = '$(wget -q -O - https://composer.github.io/installer.sig)'; \
     \$hash = hash('SHA384', file_get_contents('/tmp/installer.php')); \
     if (!hash_equals(\$signature, \$hash)) { \
         unlink('/tmp/installer.php'); \
@@ -37,6 +37,8 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 WORKDIR /app
 
+RUN composer global require laravel/installer
+
 ENTRYPOINT ["/bin/sh", "/docker-entrypoint.sh"]
 
-CMD ["composer"]
+CMD ["php-fpm"]
