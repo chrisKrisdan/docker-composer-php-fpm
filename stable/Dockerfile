@@ -37,7 +37,7 @@ COPY docker-entrypoint.sh /docker-entrypoint.sh
 
 WORKDIR /app
 
-RUN composer global require laravel/installer
+#RUN composer global require laravel/installer
 
 ENTRYPOINT ["/bin/sh", "/docker-entrypoint.sh"]
 
