@@ -16,7 +16,7 @@ RUN apk add --no-cache --virtual .build-deps zlib-dev \
  && apk add --virtual .composer-phpext-rundeps $runDeps \
  && apk del .build-deps
  
-RUN addgroup -S -g 100 composer && adduser -S -G -u 100 composer composer
+RUN addgroup -S -g 1000 composer && adduser -S -G -u 1000 composer composer
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 ENV COMPOSER_HOME /tmp
